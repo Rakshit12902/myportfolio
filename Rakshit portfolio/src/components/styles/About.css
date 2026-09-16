@@ -1,0 +1,130 @@
+.about-section {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  place-items: center;
+  position: relative;
+  opacity: 1;
+  height: auto;
+  width: var(--cWidth);
+  margin: auto;
+  overflow: hidden;
+  flex-direction: column; /* Stacks nicely on mobile */
+}
+
+.about-photo-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.about-photo-container {
+  position: relative;
+  width: 220px;
+  height: 260px;
+  border-radius: 20px;
+  margin: 0 auto 30px auto;
+  align-self: center;
+  transition: transform 0.3s ease;
+}
+
+.about-photo-container:hover {
+  transform: translateY(-5px);
+}
+
+.about-photo-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #ec4899, #8b5cf6, #14b8a6);
+  filter: blur(20px);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.about-photo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.about-me {
+  padding: 50px 0px;
+  padding-bottom: 0;
+  width: 500px;
+  max-width: calc(100% - 15px);
+  display: flex;
+  flex-direction: column;
+}
+
+.about-me h3 {
+  font-size: 25px;
+  text-transform: uppercase;
+  letter-spacing: 7px;
+  font-weight: 400;
+  color: var(--accentColor);
+  margin-top: 0;
+}
+
+.about-me p {
+  font-size: 33px;
+  font-weight: 600;
+  line-height: 36px;
+  letter-spacing: 1px;
+}
+
+@media only screen and (min-width: 600px) {
+  .about-section {
+    justify-content: center;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .about-me {
+    width: 500px;
+    max-width: calc(100% - 70px);
+    transform: translateY(0%);
+  }
+  .about-section {
+    opacity: 1;
+  }
+}
+@media only screen and (min-width: 1025px) {
+  .about-section {
+    width: var(--cWidth);
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    max-width: 1920px;
+    height: var(--vh);
+    padding: 0px;
+    opacity: 1;
+  }
+  .about-photo-wrapper {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .about-me {
+    padding: 0px;
+    width: 50%;
+  }
+  .about-me p {
+    font-size: 1.9vw;
+    line-height: 2.3vw;
+  }
+}
+@media only screen and (min-width: 1950px) {
+  .about-me p {
+    font-size: 2.5rem;
+    line-height: 2.7rem;
+  }
+}
