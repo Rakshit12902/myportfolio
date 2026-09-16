@@ -1,5 +1,29 @@
 import * as THREE from "three";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+export function setCharTimeline(
+  character: THREE.Object3D,
+  camera: THREE.PerspectiveCamera
+) {
+  if (window.innerWidth <= 1024) return;
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".landing-section",
+      start: "top top",
+      end: "bottom top",
+      scrub: true,
+      invalidateOnRefresh: true,
+    },
+  });
+
+  tl.to(character.position, { x: 2, duration: 1 }, 0)
+    .to(character.rotation, { y: Math.PI * 0.5, duration: 1 }, 0)
+    .to(camera.position, { z: 5, duration: 1 }, 0);
+}
 
 export function setLayoutTimeline() {
   const tl1 = gsap.timeline({
