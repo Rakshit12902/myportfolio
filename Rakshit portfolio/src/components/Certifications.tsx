@@ -72,7 +72,7 @@ const Certifications = () => {
                 
                 {cert.image && (
                   cert.link ? (
-                    <a href={cert.link} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
+                    <a href={cert.link} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", position: "relative", zIndex: 5, overflow: "visible" }}>
                       <img src={cert.image} alt={cert.title} className="achievement-badge" style={{ maxWidth: "300px" }} />
                     </a>
                   ) : (

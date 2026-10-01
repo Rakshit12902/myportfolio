@@ -1,29 +1,5 @@
-import * as THREE from "three";
+
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
-
-export function setCharTimeline(
-  character: THREE.Object3D,
-  camera: THREE.PerspectiveCamera
-) {
-  if (window.innerWidth <= 1024) return;
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".landing-section",
-      start: "top top",
-      end: "bottom top",
-      scrub: true,
-      invalidateOnRefresh: true,
-    },
-  });
-
-  tl.to(character.position, { x: 2, duration: 1 }, 0)
-    .to(character.rotation, { y: Math.PI * 0.5, duration: 1 }, 0)
-    .to(camera.position, { z: 5, duration: 1 }, 0);
-}
 
 export function setLayoutTimeline() {
   const tl1 = gsap.timeline({
@@ -62,25 +38,18 @@ export function setLayoutTimeline() {
 
     tl2
       .to(".about-section", { y: "30%", duration: 6 }, 0)
-      .to(".about-section", { opacity: 0, delay: 3, duration: 2 }, 0)
-      .fromTo(
-        ".what-box-in",
-        { display: "none" },
-        { display: "flex", duration: 0.1, delay: 6 },
-        0
-      );
+      .to(".about-section", { opacity: 0, delay: 3, duration: 2 }, 0);
 
     tl3
       .fromTo(".whatIDO", { y: 0 }, { y: "15%", duration: 2 }, 0);
   } else {
-    const tM2 = gsap.timeline({
+    gsap.timeline({
       scrollTrigger: {
         trigger: ".what-box-in",
         start: "top 70%",
         end: "bottom top",
       },
     });
-    tM2.to(".what-box-in", { display: "flex", duration: 0.1, delay: 0 }, 0);
   }
 }
 

@@ -49,10 +49,10 @@
   min-width: 100%;
   width: 100%;
   max-width: 100%;
-  overflow: hidden;
+  overflow: visible;
   flex-shrink: 0;
   box-sizing: border-box;
-  padding: 50px 0;
+  padding: 75px 0;
 }
 
 .carousel-content {
@@ -228,7 +228,7 @@
   box-shadow: 0 0 12px var(--slide-color, rgba(94, 234, 212, 0.4));
 }
 
-/* ── Work Image (reused) ── */
+/* ── Work Image with Theatrical Curtain Reveal ── */
 .work-image {
   display: flex;
   width: 100%;
@@ -237,51 +237,228 @@
 
 .work-image-in {
   position: relative;
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+  background: #0d111a;
+  transform-origin: center center;
+  z-index: 5;
 }
 
-.work-link {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  background-color: var(--backgroundColor);
-  width: 50px;
-  border-radius: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 25px;
-  box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.5),
-    inset 0px 0px 10px 0px #393939;
-  transition: 0.3s;
-  opacity: 0;
+.work-image-in:hover {
+  transform: scale(1.18) translateY(-6px);
+  z-index: 25;
+  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.9), 0 0 35px rgba(20, 184, 166, 0.4), 0 0 0 1px rgba(20, 184, 166, 0.5);
 }
 
-.work-image a:hover {
-  color: inherit;
-}
-
-.work-image a:hover .work-link {
-  opacity: 1;
-}
-
-.work-image video {
-  position: absolute;
+.curtain-image-base {
+  position: relative;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-  background-color: #000;
-  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.7s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s ease;
+  z-index: 1;
+}
+
+.curtain-active .curtain-image-base {
+  opacity: 0;
+  transform: scale(0.95);
 }
 
 .work-image img {
   width: 100%;
   max-width: 100%;
   height: auto;
-  max-height: 400px;
-  object-fit: contain;
-  border-radius: 8px;
+  max-height: 420px;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px;
+}
+
+/* Video Stage (Sits behind the curtain, scales down/settles when revealed) */
+.curtain-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  background: #000;
+  border-radius: 16px;
+}
+
+.curtain-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* Default: slightly zoomed in */
+  transform: scale(1.15);
+  filter: brightness(0.95) contrast(1.05);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+  border-radius: 16px;
+}
+
+/* When curtain is opened, video shrinks/settles into 1.0 view smoothly */
+.curtain-active .curtain-video {
+  transform: scale(1);
+  filter: brightness(1) contrast(1);
+}
+
+.curtain-video-glow {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 30px rgba(20, 184, 166, 0.25);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.curtain-active .curtain-video-glow {
+  opacity: 1;
+}
+
+/* ── Split Curtains (Left & Right) ── */
+.curtain-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  z-index: 4;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: linear-gradient(135deg, rgba(13, 17, 26, 0.94) 0%, rgba(20, 26, 40, 0.96) 100%);
+  transition: transform 0.75s cubic-bezier(0.77, 0, 0.175, 1);
+  pointer-events: none;
+}
+
+.curtain-left {
+  left: 0;
+  transform: translateX(0%);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.curtain-right {
+  right: 0;
+  transform: translateX(0%);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Curtain Open Action on Hover */
+.curtain-active .curtain-left {
+  transform: translateX(-102%);
+}
+
+.curtain-active .curtain-right {
+  transform: translateX(102%);
+}
+
+/* Neon Edge Highlight along Curtain Split */
+.curtain-edge-light {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, rgba(236, 72, 153, 0.8), rgba(139, 92, 246, 0.9), rgba(20, 184, 166, 0.8));
+  filter: blur(1px);
+  opacity: 0.8;
+}
+
+.curtain-left .curtain-edge-light {
+  right: 0;
+}
+
+.curtain-right .curtain-edge-light {
+  left: 0;
+}
+
+/* ── Badge Pill (Hover to Unveil) ── */
+.curtain-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(13, 17, 26, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: #e2e8f0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: all 0.4s ease;
+  pointer-events: none;
+}
+
+.badge-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  animation: badgePulse 1.8s infinite ease-in-out;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.6;
+  }
+}
+
+.curtain-active .curtain-badge {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* ── External Link Icon ── */
+.work-link {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background-color: rgba(13, 17, 26, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 46px;
+  border-radius: 50%;
+  height: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  color: #fff;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: scale(0.85);
+  z-index: 10;
+  backdrop-filter: blur(6px);
+}
+
+.work-image-in:hover .work-link {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.work-link:hover {
+  background-color: var(--accentColor);
+  color: #000;
+  transform: scale(1.1);
 }
 
 /* ── Responsive ── */

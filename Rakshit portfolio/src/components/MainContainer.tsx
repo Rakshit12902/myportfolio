@@ -14,6 +14,7 @@ import { setLayoutTimeline } from "./utils/GsapScroll";
 import { useLoading } from "../context/LoadingProvider";
 import { setProgress } from "./Loading";
 import BackgroundAudio from "./BackgroundAudio";
+import StarfieldBackground from "./StarfieldBackground";
 
 const TechStack = lazy(() => import("./TechStack"));
 
@@ -45,6 +46,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
 
   return (
     <div className="container-main">
+      <StarfieldBackground />
       <Cursor />
       <BackgroundAudio />
       <Navbar />

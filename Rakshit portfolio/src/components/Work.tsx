@@ -26,6 +26,7 @@ const projects = [
       "Integrated LLMs with RAG for personalized report analysis and follow-up queries."
     ],
     image: "/images/curamind-project.png",
+    video: "/images/democuramindvideo.mp4",
     link: "https://curamind-mu.vercel.app/",
   }
 ];
@@ -128,6 +129,7 @@ const Work = () => {
                         image={project.image}
                         alt={project.title}
                         link={project.link}
+                        video={project.video}
                       />
                     </div>
                   </div>

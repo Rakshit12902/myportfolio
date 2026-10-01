@@ -19,7 +19,7 @@ const Scene = () => {
   const sceneRef = useRef(new THREE.Scene());
   const { setLoading } = useLoading();
 
-  const [character, setChar] = useState<THREE.Object3D | null>(null);
+  const [, setChar] = useState<THREE.Object3D | null>(null);
   useEffect(() => {
     if (canvasDiv.current) {
       let rect = canvasDiv.current.getBoundingClientRect();
@@ -69,9 +69,9 @@ const Scene = () => {
               animations.startIntro();
             }, 2500);
           });
-          window.addEventListener("resize", () =>
-            handleResize(renderer, camera, canvasDiv, character)
-          );
+          window.addEventListener("resize", () => {
+            handleResize(renderer, camera, canvasDiv)
+          });
         }
       });
 
@@ -131,7 +131,7 @@ const Scene = () => {
         scene.clear();
         renderer.dispose();
         window.removeEventListener("resize", () =>
-          handleResize(renderer, camera, canvasDiv, character!)
+          handleResize(renderer, camera, canvasDiv)
         );
         if (canvasDiv.current) {
           canvasDiv.current.removeChild(renderer.domElement);
